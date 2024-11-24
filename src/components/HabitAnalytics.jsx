@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext'; // Importing your custom ThemeContext for dark mode
 import { useNavigate } from 'react-router-dom';
+import { FaFireAlt, FaCheckCircle, FaClipboardList } from 'react-icons/fa'; // Icons for better UI
 
 const HabitAnalytics = ({ habits }) => {
   const [analytics, setAnalytics] = useState({
@@ -36,21 +37,27 @@ const HabitAnalytics = ({ habits }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Highest Streak Card */}
         <div
-          className={`p-6 rounded-lg shadow-lg transition-all ${
+          className={`p-6 rounded-lg shadow-lg transition-all transform ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-md`}
+          } hover:shadow-md`}
         >
-          <h3 className="text-xl font-semibold mb-4">Highest Streak</h3>
-          <p className="text-3xl font-bold text-orange-600">{analytics.highestStreak}</p>
+          <div className="flex items-center mb-4">
+            <FaFireAlt className="text-3xl mr-3" />
+            <h3 className="text-xl font-semibold">Highest Streak</h3>
+          </div>
+          <p className="text-4xl font-bold text-orange-600">{analytics.highestStreak}</p>
         </div>
 
         {/* Total Completed Habits Card */}
         <div
           className={`p-6 rounded-lg shadow-lg transition-all ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-md`}
+          } hover:shadow-md`}
         >
-          <h3 className="text-xl font-semibold mb-4">Total Completed Habits</h3>
+          <div className="flex items-center mb-4">
+            <FaCheckCircle className="text-3xl mr-3" />
+            <h3 className="text-xl font-semibold">Total Completed Habits</h3>
+          </div>
           <p className="text-3xl font-bold text-orange-600">{analytics.totalCompletedHabits}</p>
         </div>
 
@@ -58,9 +65,12 @@ const HabitAnalytics = ({ habits }) => {
         <div
           className={`p-6 rounded-lg shadow-lg transition-all ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-md`}
+          } hover:shadow-md`}
         >
-          <h3 className="text-xl font-semibold mb-4">Total Habits</h3>
+          <div className="flex items-center mb-4">
+            <FaClipboardList className="text-3xl mr-3" />
+            <h3 className="text-xl font-semibold">Total Habits</h3>
+          </div>
           <p className="text-3xl font-bold text-orange-600">{analytics.totalHabits}</p>
         </div>
       </div>
