@@ -15,13 +15,13 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
         {/* Left: Brand and Copyright */}
         <div className="text-sm text-center sm:text-left mb-2 sm:mb-0">
-          &copy; {new Date().getFullYear()} Own Udemy Tracker. All Rights Reserved.
+          &copy; {new Date().getFullYear()} Own Habit Tracker. All Rights Reserved.
         </div>
 
         {/* Right: Contact Email */}
         <div className="text-sm text-center sm:text-right">
           <a
-            href="mailto:admin@udemyhub.com"
+            href="mailto:own.ai.231@gmail.com"
             className="hover:text-blue-500 transition duration-300"
           >
             own.ai.231@gmail.com

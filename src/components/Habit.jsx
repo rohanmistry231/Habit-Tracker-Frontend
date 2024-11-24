@@ -15,7 +15,7 @@ const Habit = () => {
 
   // Fetch habits on component mount
   useEffect(() => {
-    fetch("http://localhost:5000/habits")
+    fetch("https://habit-tracker-backend-0woy.onrender.com/habits")
       .then((response) => response.json())
       .then((data) => setHabits(data))
       .catch((error) => console.error("Error fetching habits:", error));
@@ -23,7 +23,7 @@ const Habit = () => {
 
   // Add a new habit
   const addHabit = () => {
-    fetch("http://localhost:5000/habits", {
+    fetch("https://habit-tracker-backend-0woy.onrender.com/habits", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newHabit),
@@ -67,7 +67,7 @@ const handleDailyUpload = (habitId) => {
       formData.append("photo", selectedFile); // Add selected file to FormData
 
       // Step 4: Upload the new file
-      fetch(`http://localhost:5000/habits/${habitId}/upload`, {
+      fetch(`https://habit-tracker-backend-0woy.onrender.com/habits/${habitId}/upload`, {
         method: "POST",
         body: formData,
       })
@@ -92,7 +92,7 @@ const handleDeleteImage = (habitId) => {
   if (!confirmDelete) return;
 
   // Proceed with deleting the image
-  fetch(`http://localhost:5000/habits/${habitId}/upload`, {
+  fetch(`https://habit-tracker-backend-0woy.onrender.com/habits/${habitId}/upload`, {
     method: 'DELETE',
   })
     .then((response) => response.json())

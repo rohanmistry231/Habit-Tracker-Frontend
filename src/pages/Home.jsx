@@ -12,7 +12,7 @@ const Home = () => {
 
   // Fetch habits on component mount
   useEffect(() => {
-    fetch("http://localhost:5000/habits")
+    fetch("https://habit-tracker-backend-0woy.onrender.com/habits")
       .then((response) => response.json())
       .then((data) => setHabits(data))
       .catch((error) => console.error("Error fetching habits:", error));
