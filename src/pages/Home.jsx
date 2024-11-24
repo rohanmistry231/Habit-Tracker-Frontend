@@ -21,7 +21,7 @@ const Home = () => {
   return (
     <div
       className={`container mx-auto px-4 py-6 mt-12 ${
-        isDarkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >
       <HabitAnalytics habits={habits} />

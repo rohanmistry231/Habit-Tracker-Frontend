@@ -38,15 +38,6 @@ const Navbar = () => {
             <Link to="/habits" className={`transition duration-150 ${getLinkClass('/habits')}`}>
               Habits
             </Link>
-            <Link to="/progress" className={`transition duration-150 ${getLinkClass('/progress')}`}>
-              Progress
-            </Link>
-            <Link to="/challenges" className={`transition duration-150 ${getLinkClass('/challenges')}`}>
-              Challenges
-            </Link>
-            <Link to="/analytics" className={`transition duration-150 ${getLinkClass('/analytics')}`}>
-              Analytics
-            </Link>
             <Link to="/profile" className={`transition duration-150 ${getLinkClass('/profile')}`}>
               Profile
             </Link>
@@ -91,7 +82,7 @@ const Navbar = () => {
           isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
         } fixed top-14 right-0 h-screen w-64 overflow-y-auto z-40`}
       >
-        {['/', '/habits', '/progress', '/challenges', '/analytics', '/profile'].map((path, index) => (
+        {['/', '/habits', '/profile'].map((path, index) => (
           <Link
             key={path}
             to={path}

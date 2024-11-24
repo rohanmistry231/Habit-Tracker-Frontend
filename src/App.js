@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import Home from "./pages/Home";
 import Habit from "./components/Habit";
+import Profile from "./pages/Profile";
 
 function App() {
   const { isDarkMode } = useTheme();
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/habits" element={<Habit />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
         <Footer />

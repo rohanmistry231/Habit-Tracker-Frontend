@@ -117,7 +117,7 @@ const handleDeleteImage = (habitId) => {
   return (
     <div
       className={`container mx-auto px-4 py-6 mt-12 ${
-        isDarkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >
       <div className="flex justify-between items-center mb-4">
@@ -126,8 +126,8 @@ const handleDeleteImage = (habitId) => {
           onClick={() => setIsModalOpen(true)}
           className={`${
             isDarkMode
-              ? "bg-blue-700 text-white hover:bg-blue-800"
-              : "bg-blue-500 text-white hover:bg-blue-600"
+              ? "bg-orange-700 text-white hover:bg-orange-800"
+              : "bg-orange-500 text-white hover:bg-orange-600"
           } px-4 py-2 rounded flex items-center`}
         >
           <FaPlus className="mr-2" /> Add Habit
@@ -185,8 +185,8 @@ const handleDeleteImage = (habitId) => {
             onClick={() => handleDeleteImage(habit._id)}
             className={`${
                 isDarkMode
-                  ? "bg-red-700 text-white hover:bg-red-800"
-                  : "bg-red-500 text-white hover:bg-red-600"
+                  ? "bg-gray-700 text-white hover:bg-red-800"
+                  : "bg-gray-500 text-white hover:bg-red-600"
               } px-4 py-2 rounded-md`}
           >
             Delete Today's Upload

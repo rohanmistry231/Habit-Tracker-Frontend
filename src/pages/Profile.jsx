@@ -1,15 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '../context/ThemeContext'; // Importing your custom ThemeContext for dark mode
+import { useTheme } from '../context/ThemeContext'; // For dark mode context
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Make sure to install axios: npm install axios
 
-const HabitAnalytics = ({ habits }) => {
+const Profile = ({ user }) => {
+  const { theme } = useTheme(); // Accessing theme for dark mode
+  const [habits, setHabits] = useState([]);
   const [analytics, setAnalytics] = useState({
     highestStreak: 0,
     totalCompletedHabits: 0,
-    totalHabits: habits.length,
+    totalHabits: 0,
   });
-  const { theme } = useTheme(); // Accessing the theme from ThemeContext
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch habits from the backend when the component mounts
+    const fetchHabits = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/habits'); // Replace with your actual endpoint
+        const habitsData = response.data;
+        setHabits(habitsData);
+      } catch (error) {
+        console.error('Error fetching habits:', error);
+      }
+    };
+
+    fetchHabits();
+  }, []);
 
   useEffect(() => {
     if (habits.length > 0) {
@@ -26,19 +43,30 @@ const HabitAnalytics = ({ habits }) => {
 
   return (
     <div
-      className={`p-8 rounded-xl shadow-md ${
+      className={`max-w-4xl mx-auto p-8 rounded-2xl shadow-2xl mt-12 ${
         theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
       }`}
     >
-      <h2 className="text-3xl font-bold mb-6 text-center">
-        Habit Analytics
-      </h2>
+      {/* Profile Header */}
+      <div className="flex items-center mb-6 space-x-6">
+        <img
+          src="profile.jpg"
+          alt="Profile Avatar"
+          className="w-24 h-24 rounded-full border-4 border-orange-400 object-cover"
+        />
+        <div>
+          <h2 className="text-3xl font-bold">Rohan Mistry</h2>
+          <p className="text-lg text-gray-500 mailto:rohanmistry231@gmail.com">rohanmistry231@gmail.com</p>
+        </div>
+      </div>
+
+      {/* Habit Analytics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Highest Streak Card */}
         <div
           className={`p-6 rounded-lg shadow-lg transition-all ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-md`}
+          } hover:scale-105 hover:shadow-xl`}
         >
           <h3 className="text-xl font-semibold mb-4">Highest Streak</h3>
           <p className="text-3xl font-bold text-orange-600">{analytics.highestStreak}</p>
@@ -48,7 +76,7 @@ const HabitAnalytics = ({ habits }) => {
         <div
           className={`p-6 rounded-lg shadow-lg transition-all ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-md`}
+          } hover:scale-105 hover:shadow-xl`}
         >
           <h3 className="text-xl font-semibold mb-4">Total Completed Habits</h3>
           <p className="text-3xl font-bold text-orange-600">{analytics.totalCompletedHabits}</p>
@@ -58,26 +86,26 @@ const HabitAnalytics = ({ habits }) => {
         <div
           className={`p-6 rounded-lg shadow-lg transition-all ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-md`}
+          } hover:scale-105 hover:shadow-xl`}
         >
           <h3 className="text-xl font-semibold mb-4">Total Habits</h3>
           <p className="text-3xl font-bold text-orange-600">{analytics.totalHabits}</p>
         </div>
       </div>
 
-      {/* Button to View All Habits */}
-      <div className="mt-8 text-center">
+      {/* Action Buttons */}
+      <div className="mt-8 flex justify-between items-center">
         <button
           onClick={() => navigate('/habits')}
-          className={`py-3 px-6 rounded-md font-semibold transition-all ${
+          className={`py-3 px-6 rounded-lg font-semibold transition-all w-full ${
             theme === 'dark' ? 'bg-orange-600 text-white' : 'bg-orange-500 text-white'
           } hover:bg-orange-700 hover:scale-105 shadow-md`}
         >
-          View All Habits
+          View Habits
         </button>
       </div>
     </div>
   );
 };
 
-export default HabitAnalytics;
+export default Profile;
