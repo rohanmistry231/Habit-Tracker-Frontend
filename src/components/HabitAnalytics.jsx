@@ -27,11 +27,11 @@ const HabitAnalytics = ({ habits }) => {
 
   return (
     <div
-      className={`p-8 rounded-xl shadow-md ${
+      className={`p-8 rounded-xl pt-2 pb-0 ${
         theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
       }`}
     >
-      <h2 className="text-3xl font-bold mb-6 text-center">
+      <h2 className="text-3xl font-bold mb-4 text-center">
         Habit Analytics
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,12 +76,12 @@ const HabitAnalytics = ({ habits }) => {
       </div>
 
       {/* Button to View All Habits */}
-      <div className="mt-8 text-center">
+      <div className="mt-5 text-center">
         <button
           onClick={() => navigate('/habits')}
           className={`py-3 px-6 rounded-md font-semibold transition-all ${
             theme === 'dark' ? 'bg-orange-600 text-white' : 'bg-orange-500 text-white'
-          } hover:bg-orange-700 hover:scale-105 shadow-md`}
+          } hover:bg-orange-700  shadow-md`}
         >
           View All Habits
         </button>
