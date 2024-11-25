@@ -9,26 +9,12 @@
     {
       "src": "Habit.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "media": "(prefers-color-scheme: light)"
+      "type": "image/png"
     },
     {
       "src": "Habit.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "media": "(prefers-color-scheme: dark)"
-    },
-    {
-      "src": "Habit.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "media": "(prefers-color-scheme: light)"
-    },
-    {
-      "src": "Habit.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "media": "(prefers-color-scheme: dark)"
+      "type": "image/png"
     },
     {
       "src": "favicon-64x64.png",

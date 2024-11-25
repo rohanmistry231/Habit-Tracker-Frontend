@@ -6,6 +6,7 @@ import axios from 'axios'; // Make sure to install axios: npm install axios
 const Profile = ({ user }) => {
   const { theme } = useTheme(); // Accessing theme for dark mode
   const [habits, setHabits] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [analytics, setAnalytics] = useState({
     highestStreak: 0,
     totalCompletedHabits: 0,
@@ -17,11 +18,13 @@ const Profile = ({ user }) => {
     // Fetch habits from the backend when the component mounts
     const fetchHabits = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/habits'); // Replace with your actual endpoint
+        const response = await axios.get('https://habit-tracker-backend-0woy.onrender.com/habits'); // Replace with your actual endpoint
         const habitsData = response.data;
         setHabits(habitsData);
       } catch (error) {
         console.error('Error fetching habits:', error);
+      } finally{
+        setLoading(false);
       }
     };
 
@@ -59,6 +62,13 @@ const Profile = ({ user }) => {
           <p className="text-lg text-gray-500 mailto:rohanmistry231@gmail.com">rohanmistry231@gmail.com</p>
         </div>
       </div>
+
+      {loading ? (
+        <div className="flex justify-center items-center md:min-h-screen lg:min-h-screen max-h-screen mt-60 mb-60">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+        </div>
+      ) : (
+      <>
 
       {/* Habit Analytics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -104,6 +114,8 @@ const Profile = ({ user }) => {
           View Habits
         </button>
       </div>
+      </>
+      )}
     </div>
   );
 };
