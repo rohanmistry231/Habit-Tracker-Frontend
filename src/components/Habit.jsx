@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal"; // Modal package for adding and updating habits
-import { FaSearch, FaUpload, FaEdit, FaTrash, FaTimes, FaChevronDown } from "react-icons/fa";
+import { FaSearch, FaUpload, FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext"; // Import useTheme from ThemeContext
 
 Modal.setAppElement("#root"); // Set root element for accessibility
@@ -176,9 +176,9 @@ useEffect(() => {
             placeholder="Search habits..."
             className={`w-full pl-4 pr-10 py-2 rounded border ${
               isDarkMode
-                ? "bg-gray-800 text-white border-gray-600 placeholder-gray-400"
-                : "bg-gray-100 text-gray-900 border-gray-300 placeholder-gray-500"
-            } focus:outline-none focus:ring-2 ${
+              ? "bg-gray-800 text-white border-gray-700"
+              : "bg-white placeholder-gray-500 border-gray-300"
+          } focus:outline-none focus:ring-2 ${
               isDarkMode ? "focus:ring-orange-700" : "focus:ring-orange-500"
             }`}
             onChange={(e) => setSearchTerm(e.target.value)} // Assuming you have a searchTerm state
@@ -195,21 +195,16 @@ useEffect(() => {
           <select
             onChange={(e) => sortHabits(e.target.value)}
             value={sortOrder}
-            className={`w-full px-4 py-2 rounded-md bg-blue-500 text-white border-none appearance-none transition-all focus:outline-none ${
-              sortOrder === "asc" ? "bg-blue-700" : sortOrder === "desc" ? "bg-blue-700" : ""
-            }`}
+            className={`w-full px-4 py-2 rounded-md border ${
+              isDarkMode
+              ? "bg-gray-800 text-white border-gray-700"
+              : "bg-white text-black border-gray-300"
+          }`}
           >
             <option value="">Sort by Streak</option>
             <option value="asc">Low to High</option>
             <option value="desc">High to Low</option>
           </select>
-          <div
-            className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-white ${
-              sortOrder ? "rotate-180" : ""
-            }`}
-          >
-            <FaChevronDown />
-          </div>
         </div>
 
         {/* Add Habit Button */}
@@ -256,7 +251,7 @@ useEffect(() => {
             {/* Streak */}
             <div className="flex justify-center items-center mt-4">
               <span
-                className={`text-lg font-bold px-3 py-1 rounded-full ${
+                className={`text-lg font-bold px-3 py-1 pl-5 rounded-full ${
                   isDarkMode
                     ? "bg-green-700 text-white"
                     : "bg-green-100 text-green-800"

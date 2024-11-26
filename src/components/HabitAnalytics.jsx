@@ -31,7 +31,7 @@ const HabitAnalytics = ({ habits }) => {
         theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
       }`}
     >
-      <h2 className="text-3xl font-bold mb-4 text-center">
+      <h2 className="text-3xl font-bold mb-6 text-center">
         Habit Analytics
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,7 +76,7 @@ const HabitAnalytics = ({ habits }) => {
       </div>
 
       {/* Button to View All Habits */}
-      <div className="mt-5 text-center">
+      <div className="mt-7 text-center">
         <button
           onClick={() => navigate('/habits')}
           className={`py-3 px-6 rounded-md font-semibold transition-all ${

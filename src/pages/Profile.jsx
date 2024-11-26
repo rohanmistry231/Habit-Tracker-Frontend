@@ -46,12 +46,12 @@ const Profile = ({ user }) => {
 
   return (
     <div
-      className={`max-w-4xl mx-auto p-8 rounded-2xl shadow-2xl mt-12 ${
+      className={`max-w-4xl mx-auto p-8 rounded-2xl mt-12 ${
         theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
       }`}
     >
       {/* Profile Header */}
-      <div className="flex items-center mb-6 space-x-6">
+      <div className="flex items-center mb-8 space-x-6">
         <img
           src="profile.jpg"
           alt="Profile Avatar"
@@ -59,7 +59,7 @@ const Profile = ({ user }) => {
         />
         <div>
           <h2 className="text-3xl font-bold">Rohan Mistry</h2>
-          <p className="text-lg text-gray-500 mailto:rohanmistry231@gmail.com">rohanmistry231@gmail.com</p>
+          <p className="text-md text-gray-500 mailto:rohanmistry231@gmail.com">rohanmistry231@gmail.com</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@ const Profile = ({ user }) => {
         <div
           className={`p-6 rounded-lg shadow-lg transition-all ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-xl`}
+          } hover:shadow-xl`}
         >
           <h3 className="text-xl font-semibold mb-4">Highest Streak</h3>
           <p className="text-3xl font-bold text-orange-600">{analytics.highestStreak}</p>
@@ -86,7 +86,7 @@ const Profile = ({ user }) => {
         <div
           className={`p-6 rounded-lg shadow-lg transition-all ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-xl`}
+          } hover:shadow-xl`}
         >
           <h3 className="text-xl font-semibold mb-4">Total Completed Habits</h3>
           <p className="text-3xl font-bold text-orange-600">{analytics.totalCompletedHabits}</p>
@@ -96,7 +96,7 @@ const Profile = ({ user }) => {
         <div
           className={`p-6 rounded-lg shadow-lg transition-all ${
             theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-          } hover:scale-105 hover:shadow-xl`}
+          } hover:shadow-xl`}
         >
           <h3 className="text-xl font-semibold mb-4">Total Habits</h3>
           <p className="text-3xl font-bold text-orange-600">{analytics.totalHabits}</p>
@@ -109,7 +109,7 @@ const Profile = ({ user }) => {
           onClick={() => navigate('/habits')}
           className={`py-3 px-6 rounded-lg font-semibold transition-all w-full ${
             theme === 'dark' ? 'bg-orange-600 text-white' : 'bg-orange-500 text-white'
-          } hover:bg-orange-700 hover:scale-105 shadow-md`}
+          } hover:bg-orange-700 shadow-md`}
         >
           View Habits
         </button>
