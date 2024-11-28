@@ -17,24 +17,26 @@ const Habit = () => {
   const isDarkMode = theme === "dark";
 
   // Fetch habits on component mount
-useEffect(() => {
-  const fetchHabits = async () => {
-    try {
-      const response = await fetch("https://habit-tracker-backend-0woy.onrender.com/habits");
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+  useEffect(() => {
+    const fetchHabits = async () => {
+      try {
+        const response = await fetch(
+          "https://habit-tracker-backend-0woy.onrender.com/habits"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setHabits(data);
+      } catch (error) {
+        console.error("Error fetching habits:", error.message);
+      } finally {
+        setLoading(false);
       }
-      const data = await response.json();
-      setHabits(data);
-    } catch (error) {
-      console.error("Error fetching habits:", error.message);
-    } finally{
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchHabits();
-}, []);
+    fetchHabits();
+  }, []);
 
   // Add or update a habit
   const saveHabit = () => {
@@ -68,7 +70,9 @@ useEffect(() => {
 
   // Delete a habit
   const deleteHabit = (habitId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this habit?"
+    );
     if (!confirmDelete) return;
 
     fetch(`https://habit-tracker-backend-0woy.onrender.com/habits/${habitId}`, {
@@ -83,18 +87,25 @@ useEffect(() => {
 
   const handleDeleteImage = (habitId) => {
     // Ask for confirmation before deleting the image
-    const confirmDelete = window.confirm("Are you sure you want to delete today's image?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete today's image?"
+    );
     if (!confirmDelete) return;
-  
+
     // Proceed with deleting the image
-    fetch(`https://habit-tracker-backend-0woy.onrender.com/habits/${habitId}/upload`, {
-      method: 'DELETE',
-    })
+    fetch(
+      `https://habit-tracker-backend-0woy.onrender.com/habits/${habitId}/upload`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => response.json())
       .then((updatedHabit) => {
         // Update the habits state with the updated habit
         setHabits((prev) =>
-          prev.map((habit) => (habit._id === updatedHabit._id ? updatedHabit : habit))
+          prev.map((habit) =>
+            habit._id === updatedHabit._id ? updatedHabit : habit
+          )
         );
         alert("Today's image has been deleted and streak updated.");
       })
@@ -114,14 +125,17 @@ useEffect(() => {
       }
     });
     setHabits(sortedHabits);
-  };  
+  };
 
   // Handle daily upload for habit (unchanged)
   const handleDailyUpload = (habitId) => {
     const habit = habits.find((habit) => habit._id === habitId);
     const today = new Date().toDateString();
     const uploads = habit?.uploads || [];
-    const lastUpload = uploads.length > 0 ? new Date(uploads[uploads.length - 1]?.date).toDateString() : null;
+    const lastUpload =
+      uploads.length > 0
+        ? new Date(uploads[uploads.length - 1]?.date).toDateString()
+        : null;
 
     if (lastUpload === today) {
       alert("Today's image is already uploaded.");
@@ -137,10 +151,13 @@ useEffect(() => {
         const formData = new FormData();
         formData.append("photo", selectedFile);
 
-        fetch(`https://habit-tracker-backend-0woy.onrender.com/habits/${habitId}/upload`, {
-          method: "POST",
-          body: formData,
-        })
+        fetch(
+          `https://habit-tracker-backend-0woy.onrender.com/habits/${habitId}/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        )
           .then((response) => response.json())
           .then((updatedHabit) => {
             setHabits((prev) =>
@@ -150,7 +167,9 @@ useEffect(() => {
             );
             alert("Streak updated!");
           })
-          .catch((error) => console.error("Error uploading daily habit:", error));
+          .catch((error) =>
+            console.error("Error uploading daily habit:", error)
+          );
       }
     };
     fileInput.click();
@@ -176,9 +195,9 @@ useEffect(() => {
             placeholder="Search habits..."
             className={`w-full pl-4 pr-10 py-2 rounded border ${
               isDarkMode
-              ? "bg-gray-800 text-white border-gray-700"
-              : "bg-white placeholder-gray-500 border-gray-300"
-          } focus:outline-none focus:ring-2 ${
+                ? "bg-gray-800 text-white border-gray-700"
+                : "bg-white placeholder-gray-500 border-gray-300"
+            } focus:outline-none focus:ring-2 ${
               isDarkMode ? "focus:ring-orange-700" : "focus:ring-orange-500"
             }`}
             onChange={(e) => setSearchTerm(e.target.value)} // Assuming you have a searchTerm state
@@ -191,15 +210,17 @@ useEffect(() => {
         </div>
 
         {/* Sort by Streak Dropdown */}
-        <div className="relative w-full md:w-1/3 mt-4 md:mt-0"> {/* Added mt-4 to create gap on smaller screens */}
+        <div className="relative w-full md:w-1/3 mt-4 md:mt-0">
+          {" "}
+          {/* Added mt-4 to create gap on smaller screens */}
           <select
             onChange={(e) => sortHabits(e.target.value)}
             value={sortOrder}
             className={`w-full px-4 py-2 rounded-md border ${
               isDarkMode
-              ? "bg-gray-800 text-white border-gray-700"
-              : "bg-white text-black border-gray-300"
-          }`}
+                ? "bg-gray-800 text-white border-gray-700"
+                : "bg-white text-black border-gray-300"
+            }`}
           >
             <option value="">Sort by Streak</option>
             <option value="asc">Low to High</option>
@@ -230,204 +251,209 @@ useEffect(() => {
         </div>
       ) : (
         <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredHabits.map((habit) => (
-          <div
-            key={habit._id}
-            className={`p-6 rounded-lg border shadow-md transition ${
-              isDarkMode
-                ? "bg-gray-800 border-gray-700 text-white hover:shadow-lg"
-                : "bg-white border-gray-300 text-gray-900 hover:shadow-lg"
-            }`}
-          >
-            {/* Title and Description */}
-            <div className="flex flex-col items-center">
-              <h3 className="text-2xl font-bold mb-2">{habit.name}</h3>
-              <p className="text-sm text-center text-gray-500">
-                {habit.description}
-              </p>
-            </div>
-
-            {/* Streak */}
-            <div className="flex justify-center items-center mt-4">
-              <span
-                className={`text-lg font-bold px-3 py-1 pl-5 rounded-full ${
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {filteredHabits.map((habit) => (
+              <div
+                key={habit._id}
+                className={`p-6 rounded-lg border shadow-md transition ${
                   isDarkMode
-                    ? "bg-green-700 text-white"
-                    : "bg-green-100 text-green-800"
+                    ? "bg-gray-800 border-gray-700 text-white hover:shadow-lg"
+                    : "bg-white border-gray-300 text-gray-900 hover:shadow-lg"
                 }`}
               >
-                Streak: {habit.streak}🔥
-              </span>
-            </div>
+                {/* Title and Description */}
+                <div className="flex flex-col items-center">
+                  <h3 className="text-2xl font-bold mb-2">{habit.name}</h3>
+                  <p className="text-sm text-center text-gray-500">
+                    {habit.description}
+                  </p>
+                </div>
 
-            {/* Buttons */}
-            <div className="flex flex-wrap justify-center gap-2 mt-6">
-              <button
-                className={`flex items-center justify-center px-4 py-2 rounded-md ${
-                  isDarkMode
-                    ? "bg-green-700 text-white hover:bg-green-800"
-                    : "bg-green-500 text-white hover:bg-green-600"
-                }`}
-                onClick={() => handleDailyUpload(habit._id)}
-              >
-                <FaUpload className="mr-2" />
-                Upload
-              </button>
+                {/* Streak */}
+                <div className="flex justify-center items-center mt-4">
+                  <span
+                    className={`text-lg font-bold px-3 py-1 pl-5 rounded-full ${
+                      isDarkMode
+                        ? "bg-green-700 text-white"
+                        : "bg-green-100 text-green-800"
+                    }`}
+                  >
+                    Streak: {habit.streak}🔥
+                  </span>
+                </div>
 
-              <button
-                className={`flex items-center justify-center px-4 py-2 rounded-md ${
-                  isDarkMode
-                    ? "bg-blue-700 text-white hover:bg-blue-800"
-                    : "bg-blue-500 text-white hover:bg-blue-600"
-                }`}
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setNewHabit({
-                    name: habit.name,
-                    description: habit.description,
-                  });
-                  setEditingHabitId(habit._id);
-                }}
-              >
-                <FaEdit className="mr-2" />
-                Edit
-              </button>
+                {/* Buttons */}
+                <div className="flex flex-wrap justify-center gap-2 mt-6">
+                  <button
+                    className={`flex items-center justify-center px-4 py-2 rounded-md ${
+                      isDarkMode
+                        ? "bg-green-700 text-white hover:bg-green-800"
+                        : "bg-green-500 text-white hover:bg-green-600"
+                    }`}
+                    onClick={() => handleDailyUpload(habit._id)}
+                  >
+                    <FaUpload className="mr-2" />
+                    Upload
+                  </button>
 
-              <button
-                className={`flex items-center justify-center px-4 py-2 rounded-md ${
-                  isDarkMode
-                    ? "bg-red-700 text-white hover:bg-red-800"
-                    : "bg-red-500 text-white hover:bg-red-600"
-                }`}
-                onClick={() => deleteHabit(habit._id)}
-              >
-                <FaTrash className="mr-2" />
-                Delete
-              </button>
-            </div>
+                  <button
+                    className={`flex items-center justify-center px-4 py-2 rounded-md ${
+                      isDarkMode
+                        ? "bg-blue-700 text-white hover:bg-blue-800"
+                        : "bg-blue-500 text-white hover:bg-blue-600"
+                    }`}
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      setNewHabit({
+                        name: habit.name,
+                        description: habit.description,
+                      });
+                      setEditingHabitId(habit._id);
+                    }}
+                  >
+                    <FaEdit className="mr-2" />
+                    Edit
+                  </button>
 
-            {/* Delete Today's Upload Button */}
-            <div className="mt-4">
-              <button
-                onClick={() => handleDeleteImage(habit._id)}
-                className={`flex items-center justify-center w-full px-4 py-2 rounded-md ${
-                  isDarkMode
-                    ? "bg-gray-700 text-white hover:bg-red-800"
-                    : "bg-gray-500 text-white hover:bg-red-600"
-                }`}
-              >
-                <FaTimes className="mr-2" />
-                Delete Today's Upload
-              </button>
-            </div>
+                  <button
+                    className={`flex items-center justify-center px-4 py-2 rounded-md ${
+                      isDarkMode
+                        ? "bg-red-700 text-white hover:bg-red-800"
+                        : "bg-red-500 text-white hover:bg-red-600"
+                    }`}
+                    onClick={() => deleteHabit(habit._id)}
+                  >
+                    <FaTrash className="mr-2" />
+                    Delete
+                  </button>
+                </div>
+
+                {/* Delete Today's Upload Button */}
+                <div className="mt-4">
+                  <button
+                    onClick={() => handleDeleteImage(habit._id)}
+                    className={`flex items-center justify-center w-full px-4 py-2 rounded-md ${
+                      isDarkMode
+                        ? "bg-gray-700 text-white hover:bg-red-800"
+                        : "bg-gray-500 text-white hover:bg-red-600"
+                    }`}
+                  >
+                    <FaTimes className="mr-2" />
+                    Delete Today's Upload
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      </>)}
+        </>
+      )}
 
       {/* Modal for Adding/Editing Habit */}
-    {isModalOpen && (
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center"
-        onClick={() => setIsModalOpen(false)} // Close the modal when clicking outside
-      >
+      {isModalOpen && (
         <div
-          className={`relative rounded-lg shadow-lg p-6 w-full max-w-md mx-auto ${
-            isDarkMode
-              ? "bg-gray-800 text-white border border-gray-700"
-              : "bg-white text-gray-900 border border-gray-300"
-          }`}
-          onClick={(e) => e.stopPropagation()} // Prevent closing the modal when clicking inside it
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center"
+          onClick={() => setIsModalOpen(false)} // Close the modal when clicking outside
         >
-          {/* Modal Title */}
-          <h2 className={`text-2xl font-bold mb-4 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-            {editingHabitId ? "Edit Habit" : "Add Habit"}
-          </h2>
+          <div
+            className={`relative rounded-lg shadow-lg p-6 w-full max-w-md mx-auto ${
+              isDarkMode
+                ? "bg-gray-800 text-white border border-gray-700"
+                : "bg-white text-gray-900 border border-gray-300"
+            }`}
+            onClick={(e) => e.stopPropagation()} // Prevent closing the modal when clicking inside it
+          >
+            {/* Modal Title */}
+            <h2
+              className={`text-2xl font-bold mb-4 ${
+                isDarkMode ? "text-white" : "text-gray-900"
+              }`}
+            >
+              {editingHabitId ? "Edit Habit" : "Add Habit"}
+            </h2>
 
-          {/* Modal Form */}
-          <form>
-            {/* Habit Name Field */}
-            <div className="mb-4">
-              <label
-                htmlFor="habitName"
-                className={`block text-sm font-medium mb-2 ${
-                  isDarkMode ? "text-gray-300" : "text-gray-800"
-                }`}
-              >
-                Habit Name
-              </label>
-              <input
-                type="text"
-                id="habitName"
-                className={`w-full px-4 py-2 border rounded ${
-                  isDarkMode
-                    ? "bg-gray-700 text-white border-gray-600"
-                    : "bg-white text-gray-900 border-gray-300"
-                }`}
-                value={newHabit.name}
-                onChange={(e) =>
-                  setNewHabit({ ...newHabit, name: e.target.value })
-                }
-              />
-            </div>
+            {/* Modal Form */}
+            <form>
+              {/* Habit Name Field */}
+              <div className="mb-4">
+                <label
+                  htmlFor="habitName"
+                  className={`block text-sm font-medium mb-2 ${
+                    isDarkMode ? "text-gray-300" : "text-gray-800"
+                  }`}
+                >
+                  Habit Name
+                </label>
+                <input
+                  type="text"
+                  id="habitName"
+                  className={`w-full px-4 py-2 border rounded ${
+                    isDarkMode
+                      ? "bg-gray-700 text-white border-gray-600"
+                      : "bg-white text-gray-900 border-gray-300"
+                  }`}
+                  value={newHabit.name}
+                  onChange={(e) =>
+                    setNewHabit({ ...newHabit, name: e.target.value })
+                  }
+                />
+              </div>
 
-            {/* Habit Description Field */}
-            <div className="mb-4">
-              <label
-                htmlFor="habitDescription"
-                className={`block text-sm font-medium mb-2 ${
-                  isDarkMode ? "text-gray-300" : "text-gray-800"
-                }`}
-              >
-                Description
-              </label>
-              <textarea
-                id="habitDescription"
-                className={`w-full px-4 py-2 border rounded ${
-                  isDarkMode
-                    ? "bg-gray-700 text-white border-gray-600"
-                    : "bg-white text-gray-900 border-gray-300"
-                }`}
-                value={newHabit.description}
-                onChange={(e) =>
-                  setNewHabit({ ...newHabit, description: e.target.value })
-                }
-              />
-            </div>
+              {/* Habit Description Field */}
+              <div className="mb-4">
+                <label
+                  htmlFor="habitDescription"
+                  className={`block text-sm font-medium mb-2 ${
+                    isDarkMode ? "text-gray-300" : "text-gray-800"
+                  }`}
+                >
+                  Description
+                </label>
+                <textarea
+                  id="habitDescription"
+                  className={`w-full px-4 py-2 border rounded ${
+                    isDarkMode
+                      ? "bg-gray-700 text-white border-gray-600"
+                      : "bg-white text-gray-900 border-gray-300"
+                  }`}
+                  value={newHabit.description}
+                  onChange={(e) =>
+                    setNewHabit({ ...newHabit, description: e.target.value })
+                  }
+                />
+              </div>
 
-            {/* Modal Action Buttons */}
-            <div className="flex justify-end">
-              {/* Cancel Button */}
-              <button
-                type="button"
-                className={`px-4 py-2 rounded-md mr-2 ${
-                  isDarkMode
-                    ? "bg-gray-700 text-white hover:bg-gray-600"
-                    : "bg-gray-300 text-gray-900 hover:bg-gray-400"
-                }`}
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </button>
+              {/* Modal Action Buttons */}
+              <div className="flex justify-end">
+                {/* Cancel Button */}
+                <button
+                  type="button"
+                  className={`px-4 py-2 rounded-md mr-2 ${
+                    isDarkMode
+                      ? "bg-gray-700 text-white hover:bg-gray-600"
+                      : "bg-gray-300 text-gray-900 hover:bg-gray-400"
+                  }`}
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
 
-              {/* Save Button */}
-              <button
-                type="button"
-                className={`px-4 py-2 rounded-md ${
-                  isDarkMode
-                    ? "bg-orange-700 text-white hover:bg-orange-800"
-                    : "bg-orange-500 text-white hover:bg-orange-600"
-                }`}
-                onClick={saveHabit}
-              >
-                Save
-              </button>
-            </div>
-          </form>
+                {/* Save Button */}
+                <button
+                  type="button"
+                  className={`px-4 py-2 rounded-md ${
+                    isDarkMode
+                      ? "bg-orange-700 text-white hover:bg-orange-800"
+                      : "bg-orange-500 text-white hover:bg-orange-600"
+                  }`}
+                  onClick={saveHabit}
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    )}
+      )}
     </div>
   );
 };
